@@ -9,6 +9,8 @@ exec --no-startup-id dropbox
 exec --no-startup-id dunst -config ~/.config/i3/dunst.conf
 exec --no-startup-id "devmon --no-gui"
 exec_always --no-startup-id nm-applet
+exec_always --no-startup-id "unclutter -idle 3"
+exec_always --no-startup-id redshift-gtk
 
 ##########################################################
 
@@ -150,9 +152,11 @@ assign [class=Google-chrome] $workspace1
 assign [class=Subl3] $workspace2
 assign [class=Thunar] $workspace4
 assign [class=Gimp-2.8] $workspace9
+assign [class="^Spotify$"]] $workspace0
+
 assign [class=jetbrains-idea-ce] $workspace2
-for_window [class="Transmission"] move to workspace $workspace8
-for_window [class="Spotify"] move to workspace $workspace0
+for_window [class="Transmission"] move to workspace $workspace8
+#for_window [class="Spotify"] move to workspace $workspace0
 for_window [window_role="pop-up"] floating enable no_focus
 for_window [class="Xarchiver"] floating enable 
 for_window [class="File Progress.*"] floating enable 

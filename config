@@ -87,16 +87,16 @@ client.urgent           $base02 $base08 $base07 $base08
 ### i3bar to display a workspace bar 
 
 bar {
-        font pango:System San Francisco Display Bold 7.2
+        font pango:System San Francisco Display Bold 7.5
         status_command i3blocks -c ~/.config/i3/i3blocks.conf
         colors {
              separator  $base03
              background $base01
              statusline $base05
 #                           border  background text
-        focused_workspace   $base0c $base0c $base00
+        focused_workspace   $base0c $base0c $base07
         active_workspace    $base02 $base02 $base07
-        inactive_workspace  $base01 $base01 $base03
+        inactive_workspace  $base01 $base01 $base07
         urgent_workspace    $base08 $base08 $base07
 
         }

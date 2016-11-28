@@ -9,8 +9,8 @@ exec --no-startup-id dropbox
 exec --no-startup-id dunst -config ~/.config/i3/dunst.conf
 exec --no-startup-id "devmon --no-gui"
 exec_always --no-startup-id nm-applet
-exec_always --no-startup-id "unclutter -idle 3"
-exec_always --no-startup-id redshift-gtk
+exec_once --no-startup-id "unclutter -idle 3"
+exec_once --no-startup-id redshift-gtk
 
 ##########################################################
 
@@ -19,12 +19,11 @@ set $mod Mod4
 
 ################   Application Shortcuts #################
 ### Basics
-bindsym $mod+Return exec i3-sensible-terminal
+bindsym $mod+Return exec "urxvt && pkill -RTMIN+1 i3blocks"
 bindsym $mod+d exec rofi -show drun -font "System San Francisco Display Bold 12"
-bindsym $mod+q kill
+bindsym $mod+q kill ; exec pkill -RTMIN+1 i3blocks
 bindsym $mod+ctrl+l exec  "i3lock-fancy --greyscale"
 bindsym $mod+Shift+r restart
-
 
 ### Application
 bindsym $mod+shift+f exec firefox
@@ -108,7 +107,7 @@ bar {
 }
 
 ###   Workspaces Title
-set $workspace1  "1 : "
+set $workspace1  "1 : "
 set $workspace2  "2 : "
 set $workspace3  "3 : "
 set $workspace4  "4 : "
@@ -120,7 +119,7 @@ set $workspace9 "9 : "
 set $workspace0 "10 : "     
 
 ###    Switch to Workspace
-bindsym $mod+1 workspace $workspace1 
+bindsym $mod+1 workspace $workspace1  
 bindsym $mod+2 workspace $workspace2  
 bindsym $mod+3 workspace $workspace3 
 bindsym $mod+4 workspace $workspace4 
@@ -204,28 +203,28 @@ focus_follows_mouse no
 #########################################################
 
 # change focus
-bindsym $mod+h focus left
-bindsym $mod+j focus down
-bindsym $mod+k focus up
-bindsym $mod+l focus right
+bindsym $mod+h focus left ; exec pkill -RTMIN+1 i3blocks
+bindsym $mod+j focus down ; exec pkill -RTMIN+1 i3blocks
+bindsym $mod+k focus up ; exec pkill -RTMIN+1 i3blocks
+bindsym $mod+l focus right ; exec pkill -RTMIN+1 i3blocks
 
 # alternatively, you can use the cursor keys:
-bindsym $mod+Left focus left
-bindsym $mod+Down focus down
-bindsym $mod+Up focus up
-bindsym $mod+Right focus right
+bindsym $mod+Left focus left ; exec pkill -RTMIN+1 i3blocks
+bindsym $mod+Down focus down ; exec pkill -RTMIN+1 i3blocks
+bindsym $mod+Up focus up ; exec pkill -RTMIN+1 i3blocks
+bindsym $mod+Right focus right ; exec pkill -RTMIN+1 i3blocks
 
 # move focused window
-bindsym $mod+Shift+h move left
-bindsym $mod+Shift+j move down
-bindsym $mod+Shift+k move up
-bindsym $mod+Shift+l move right
+bindsym $mod+Shift+h move left ; exec pkill -RTMIN+1 i3blocks
+bindsym $mod+Shift+j move down ; exec pkill -RTMIN+1 i3blocks
+bindsym $mod+Shift+k move up ; exec pkill -RTMIN+1 i3blocks
+bindsym $mod+Shift+l move right ; exec pkill -RTMIN+1 i3blocks
 
 # alternatively, you can use the cursor keys:
-bindsym $mod+Shift+Left move left
-bindsym $mod+Shift+Down move down
-bindsym $mod+Shift+Up move up
-bindsym $mod+Shift+Right move right
+bindsym $mod+Shift+Left move left ; exec pkill -RTMIN+1 i3blocks
+bindsym $mod+Shift+Down move down ; exec pkill -RTMIN+1 i3blocks
+bindsym $mod+Shift+Up move up ; exec pkill -RTMIN+1 i3blocks
+bindsym $mod+Shift+Right move right ; exec pkill -RTMIN+1 i3blocks
 
 # split in horizontal orientation
 bindsym $mod+c split h

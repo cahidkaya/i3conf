@@ -1,17 +1,19 @@
 ###############   Startup applications   ###############
 
-exec_always feh --bg-scale ~/Pictures/wallpapers-14.jpg
+exec_always nitrogen --restore
 exec_always compton
 exec_always xrandr --output HDMI1 --off --output LVDS1 --primary --mode 1366x768 --pos 0x0 --rotate normal --output VIRTUAL1 --off --output DP1 --off --output VGA1 --off
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec --no-startup-id rescuetime
-exec --no-startup-id dropbox
+exec --no-startup-id dropbox start
 exec --no-startup-id dunst -config ~/.config/i3/dunst.conf
 exec --no-startup-id "devmon --no-gui"
 exec_always --no-startup-id nm-applet
-exec_once --no-startup-id "unclutter -idle 3"
-exec_once --no-startup-id redshift-gtk
-
+exec --no-startup-id redshift-gtk
+exec --no-startup-id libinput-gestures
+exec --no-startup-id spotify
+exec --no-startup-id thunderbird
+exec --no-startup-id "whatsie --os-startup"
 ##########################################################
 
 # Win button
@@ -21,6 +23,7 @@ set $mod Mod4
 ### Basics
 bindsym $mod+Return exec "urxvt && pkill -RTMIN+1 i3blocks"
 bindsym $mod+d exec rofi -show drun -font "System San Francisco Display Bold 12"
+bindsym $mod+Tab exec rofi -show window -font "System San Francisco Display Bold 12"
 bindsym $mod+q kill ; exec pkill -RTMIN+1 i3blocks
 bindsym $mod+ctrl+l exec  "i3lock-fancy --greyscale"
 bindsym $mod+Shift+r restart
@@ -30,6 +33,7 @@ bindsym $mod+shift+f exec firefox
 bindsym $mod+shift+s exec subl3
 bindsym $mod+shift+e exec google-chrome-stable
 bindsym $mod+shift+w exec thunar
+bindsym $mod+shift+a exec atom
 
 ### Switch keyboard layouts
 bindsym $mod+t --release exec setxkbmap -layout tr
@@ -47,7 +51,7 @@ bindsym XF86AudioRaiseVolume exec "pactl set-sink-volume @DEFAULT_SINK@ '+5%' &&
 bindsym XF86AudioLowerVolume exec "pactl set-sink-volume @DEFAULT_SINK@ '-5%' && pkill -RTMIN+2 i3blocks"
 bindsym XF86AudioMute exec "pactl set-sink-mute @DEFAULT_SINK@ toggle && pkill -RTMIN+2 i3blocks"
 
-################   Sreen brightness controls ################ 
+################   Sreen brightness controls ################
 bindsym XF86MonBrightnessUp exec xbacklight -inc 10 && pkill -RTMIN+3 i3blocks
 bindsym XF86MonBrightnessDown exec xbacklight -dec 10 && pkill -RTMIN+3 i3blocks
 
@@ -79,18 +83,17 @@ set $base0D #3498DB
 set $base0E #9B59B6
 set $base0F #be643c
 
-### Window Colours 
+### Window Colours
 #                       border  background text indicator
 client.focused          $base0D $base0D $base00 $base01
 client.focused_inactive $base02 $base02 $base03 $base01
 client.unfocused        $base01 $base01 $base03 $base01
 client.urgent           $base02 $base08 $base07 $base08
-### i3bar to display a workspace bar 
+### i3bar to display a workspace bar
 
 bar {
         font pango:System San Francisco Display Bold 7.5
         status_command i3blocks -c ~/.config/i3/i3blocks.conf
-        tray_output primary
         tray_padding 1
         colors {
              separator  $base03
@@ -116,18 +119,18 @@ set $workspace5  "5 : "
 set $workspace7 "7 : "
 set $workspace8 "8 : "
 set $workspace9 "9 : "
-set $workspace0 "10 : "     
+set $workspace0 "10 : "
 
 ###    Switch to Workspace
-bindsym $mod+1 workspace $workspace1  
-bindsym $mod+2 workspace $workspace2  
-bindsym $mod+3 workspace $workspace3 
-bindsym $mod+4 workspace $workspace4 
+bindsym $mod+1 workspace $workspace1
+bindsym $mod+2 workspace $workspace2
+bindsym $mod+3 workspace $workspace3
+bindsym $mod+4 workspace $workspace4
 bindsym $mod+5 workspace $workspace5
 bindsym $mod+6 workspace 6
 bindsym $mod+7 workspace $workspace7
 bindsym $mod+8 workspace $workspace8
-bindsym $mod+9 workspace $workspace9 
+bindsym $mod+9 workspace $workspace9
 bindsym $mod+0 workspace $workspace0
 bindsym $mod+x [urgent=latest] focus
 
@@ -149,24 +152,25 @@ bindsym $mod+Shift+0 move container to workspace $workspace0
 assign [class=Firefox] $workspace1
 assign [class=Google-chrome] $workspace1
 assign [class=Subl3] $workspace2
+assign [class=Atom] $workspace2
 assign [class=Thunar] $workspace4
 assign [class=Gimp-2.8] $workspace9
-assign [class="^Spotify$"]] $workspace0
+for_window [class="Spotify"] move to workspace $workspace0
 
 assign [class=jetbrains-idea-ce] $workspace2
 for_window [class="Transmission"] move to workspace $workspace8
 #for_window [class="Spotify"] move to workspace $workspace0
 for_window [window_role="pop-up"] floating enable no_focus
-for_window [class="Xarchiver"] floating enable 
-for_window [class="File Progress.*"] floating enable 
-for_window [window_role="task_dialog"] floating enable 
-for_window [window_role="Open Files"] floating enable 
-for_window [window_type="dialog"] floating enable 
-for_window [window_type="menu"] floating enable 
+for_window [class="Xarchiver"] floating enable
+for_window [class="File Progress.*"] floating enable
+for_window [window_role="task_dialog"] floating enable
+for_window [window_role="Open Files"] floating enable
+for_window [window_type="dialog"] floating enable
+for_window [window_type="menu"] floating enable
 for_window[class=Keepassx] floating disable
 
-### Gaps  
-gaps inner 5 
+### Gaps
+gaps inner 5
 gaps outer 1
 smart_gaps on
 
@@ -186,7 +190,7 @@ mode "$mode_system" {
     bindsym s exec --no-startup-id $Locker && systemctl suspend, mode "default"
     bindsym h exec --no-startup-id $Locker && systemctl hibernate, mode "default"
     bindsym r exec --no-startup-id systemctl reboot, mode "default"
-    bindsym Shift+s exec --no-startup-id systemctl poweroff -i, mode "default"  
+    bindsym Shift+s exec --no-startup-id systemctl poweroff -i, mode "default"
 
     # back to normal: Enter or Escape
     bindsym Return mode "default"
